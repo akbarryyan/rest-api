@@ -66,6 +66,11 @@ class UserController extends Controller
             $stmt = $this->pdo->prepare('SELECT * FROM users WHERE id = ?');
             $stmt->execute([$id]);
             $user = $stmt->fetch();
+            
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
             return response()->json($user);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -79,7 +84,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
-        
+
         try {
             $stmt = $this->pdo->prepare('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?');
             $stmt->execute([$request->name, $request->email, bcrypt($request->password), $id]);
