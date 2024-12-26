@@ -74,6 +74,12 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+        
         try {
             $stmt = $this->pdo->prepare('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?');
             $stmt->execute([$request->name, $request->email, bcrypt($request->password), $id]);
