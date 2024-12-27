@@ -51,7 +51,7 @@ class UserRoleController extends UserController
             $stmt = $this->pdo->prepare('UPDATE users SET role = ? WHERE id = ?');
             $stmt->execute([$request->role, $id]);
             return response()->json(['message' => 'User role updated successfully']);
-        } catch (\Exception $e) {
+        } catch (\PDOException $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
