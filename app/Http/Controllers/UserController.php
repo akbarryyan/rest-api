@@ -113,7 +113,8 @@ class UserController extends Controller
         ]);
         
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO users (name, email, password) VALUES (?, ?, ?)'); $stmt->execute([$request->name, $request->email, bcrypt($request->password)]);
+            $stmt = $this->pdo->prepare('INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
+            $stmt->execute([$request->name, $request->email, bcrypt($request->password)]);
             
             return response()->json(['message' => 'Signup successful']);
         } catch (\Exception $e) {
