@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\CreateOperation;
 use App\Interfaces\CrudOperations;
+use App\Interfaces\ReadOperation;
+use App\Interfaces\UpdateOperation;
+use App\Interfaces\DeleteOperation;
 use PDO;
 use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller implements CrudOperations
+class UserController extends Controller implements CreateOperation, ReadOperation, UpdateOperation, DeleteOperation
 {
     private $pdo;
 
